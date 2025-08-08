@@ -90,4 +90,17 @@ function M.hsl_to_rgb(h, s, l)
     }
 end
 
+---Converts an rbgf color to hex
+---@param r decimal
+---@param g decimal
+---@param b decimal
+---@usage rgbf(1.0, 0.0, 1.0) => Return #FF00FF
+---@return string
+function M.rgbf_to_hex(r, g, b)
+  r = math.min(math.floor(r * 255), 255)
+  g = math.min(math.floor(g * 255), 255)
+  b = math.min(math.floor(b * 255), 255)
+ 	return string.format("#%02X%02X%02X", r, g, b)
+end
+
 return M

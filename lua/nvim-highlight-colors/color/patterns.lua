@@ -15,6 +15,8 @@ M.tailwind_prefix = "!?%a+"
 
 M.ansi_regex = "\\033%[%d;%d%dm"
 
+M.shader_regex = "vec[34]%s*%(" .. string.rep("%s*%d*%.%d*%s*", 3, ",") .. "[,%s*%d*%.%d*%s*]?%)"
+
 ---Checks whether a color is short hex
 ---@param color string
 ---@usage is_short_hex_color("#FFF") => Returns true
@@ -111,6 +113,15 @@ end
 ---@return boolean
 function M.is_ansi_color(color)
 	return string.match(color, M.ansi_regex) ~= nil
+end
+
+---Checks whether a color is a shader vec4/vec3 color
+---@param color string
+---@usage is_shader_color("vec4(1.0, 0.2, 0.3, 1.0)") => Returns true
+---@usage is_shader_color("vec3(1.0, 0.2, 0.3)") => Returns true
+---@return boolean
+function M.is_shader_color(color)
+  return string.match(color, M.shader_regex) ~= nil
 end
 
 return M

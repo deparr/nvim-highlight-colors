@@ -24,6 +24,7 @@ local options = {
 	enable_short_hex = true,
 	enable_tailwind = false,
 	enable_ansi = false,
+	enable_shader = false,
 	custom_colors = nil,
 	virtual_symbol = "■",
 	virtual_symbol_prefix = "",
@@ -91,7 +92,11 @@ function M.highlight_colors(min_row, max_row, active_buffer_id)
 		ANSI = {
 			is_enabled = options.enable_ansi,
 			patterns = { color_patterns.ansi_regex },
-		}
+		},
+    SHADER = {
+      is_enabled = options.enable_shader,
+			patterns = { color_patterns.shader_regex },
+    },
 	}
 
 	for _, config in pairs(patterns_config) do

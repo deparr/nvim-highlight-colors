@@ -50,6 +50,10 @@ function M.get_color_value(color, row_offset, custom_colors, enable_short_hex )
 		return M.get_ansi_named_color_value(color)
 	end
 
+  if patterns.is_shader_color(color) then
+    return M.get_shader_color_value(color)
+  end
+
 	if (patterns.is_named_color({M.get_tailwind_named_color_pattern()}, color)) then
 		local tailwind_color = M.get_tailwind_named_color_value(color)
 		if (tailwind_color ~= nil) then
@@ -159,6 +163,20 @@ function M.get_ansi_named_color_value(color)
 		return tostring(ansi_named_colors[color_code])
 	end
 	return nil
+end
+
+---Returns the hex value of a shader vec4/vec3 color
+---@param color string
+---@usage get_shader_color_value("vec4(1.0, 0.0, 1.0, 1.0)") => Returns '#FF00FF'
+---@usage get_shader_color_value("vec3(1.0, 0.0, 1.0)") => Returns '#FF00FF'
+function M.get_shader_color_value(color)
+  local rgbf = {}
+  for color_number in string.gmatch(color, "(%d*%.%d*)") do
+    table.insert(rgbf, tonumber(color_number))
+  end
+  if #rgbf >= 3 then
+    return converters.rgbf_to_hex(rgbf[1], rgbf[2], rgbf[3])
+  end
 end
 
 ---Returns a pattern for tailwind colors
